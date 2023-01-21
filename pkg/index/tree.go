@@ -1,8 +1,6 @@
 package index
 
 import (
-	"fmt"
-
 	"github.com/miekg/dns"
 )
 
@@ -44,7 +42,6 @@ func (t *Tree) Remove(domainName string) {
 		// Check if the node has a child with the current component.
 		if ok, _ := node.HasChild(label); ok {
 			// Get the child node.
-			fmt.Println("label", label)
 			node = node.GetChild(label)
 			if i == len(labels)-1 && node.AmountOfChildren() == 0 {
 				node.Remove()
