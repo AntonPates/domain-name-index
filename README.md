@@ -24,6 +24,6 @@ A "wildcard domain name" is defined by having its initial (i.e.,
    https://www.rfc-editor.org/rfc/rfc4592#section-2.1.1
 
 ## TODO
- - Add linters 
+ - Add more tests
 
 
