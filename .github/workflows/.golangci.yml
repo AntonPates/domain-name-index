@@ -1,0 +1,4 @@
+linters:
+  deadline: 1m
+  dupl:
+    threshold: 100

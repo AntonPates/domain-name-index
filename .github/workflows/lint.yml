@@ -1,0 +1,12 @@
+name: Lint
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install linter
+        run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.51.2
+      - name: Run linter
+        run: golangci-lint run --config .golangci.yml
