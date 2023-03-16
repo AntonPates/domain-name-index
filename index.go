@@ -19,10 +19,12 @@ func New() Interface {
 }
 
 // Insert inserts a domain name into the tree.
-func (t *Tree) Insert(domainName string) {
+func (t *Tree) Insert(domainName ...string) {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
-	t.root.insert(domainName)
+	for _, name := range domainName {
+		t.root.insert(name)
+	}
 }
 
 // Find finds a domain name in the tree and returns fullPath with respect of wildcard.

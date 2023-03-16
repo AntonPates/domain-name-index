@@ -1,6 +1,10 @@
 package domiannameindex
 
-import "testing"
+import (
+	"bufio"
+	"os"
+	"testing"
+)
 
 func Test_node(t *testing.T) {
 
@@ -129,4 +133,65 @@ func TestPrint(t *testing.T) {
 	n.Remove("example.com")
 	n.Insert("google.com")
 	n.Print("")
+}
+
+func TestFind(t *testing.T) {
+	idxTree := seedIndexFromFile(t)
+	type args struct {
+		searchName string
+	}
+	tests := []struct {
+		name   string
+		args   args
+		wantOk bool
+		want   string
+	}{
+		{
+			name: "non existing domain name",
+			args: args{
+				searchName: "www.google.com",
+			},
+			wantOk: false,
+			want:   "",
+		},
+		{
+			name: "empty search name",
+			args: args{
+				searchName: "",
+			},
+			wantOk: true,
+			want:   ".",
+		},
+		{
+			name: "existing domain name",
+			args: args{
+				searchName: "google.com",
+			},
+			wantOk: true,
+			want:   "google.com.",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, fullPath := idxTree.Find(tt.args.searchName)
+			if got != tt.wantOk || fullPath != tt.want {
+				t.Errorf("node.Find() = %v, got %v, want %v", got, fullPath, tt.want)
+			}
+		})
+	}
+}
+
+func seedIndexFromFile(t *testing.T) Interface {
+	file, err := os.Open("domains.txt")
+	if err != nil {
+		t.Error(err)
+	}
+	defer file.Close()
+
+	domainIndex := New()
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		domainIndex.Insert(scanner.Text())
+	}
+	return domainIndex
 }

@@ -22,9 +22,7 @@ func BenchmarkInsert(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		t := New()
-		for _, domain := range domains {
-			t.Insert(domain)
-		}
+		t.Insert(domains...)
 	}
 }
 
