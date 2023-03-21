@@ -1,9 +1,23 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/AntonPates/domain-name-index)
+
 # domain-name-index
 Domain name index responses whether domain name in it or not with consideration of wildcard
 
 ## Installation
 ```bash
 go get github.com/AntonPates/domain-name-index
+```
+## Usage
+```go
+   idxTree := New()
+	idxTree.Insert("*.example.com")
+	ok, fullPath := idxTree.Find("name.example.com")
+   fmt.Println(ok, fullPath)
+   // true *.example.com
+
+   ok, fullPath = idxTree.Find("another.name.example.com")
+   fmt.Println(ok, fullPath)
+   // true *.example.com
 ```
 
 ## Validation and normalization of domain name

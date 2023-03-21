@@ -181,6 +181,28 @@ func TestFind(t *testing.T) {
 	}
 }
 
+func TestForReadme(t *testing.T) {
+	idxTree := New()
+	idxTree.Insert("*.example.com")
+	ok, fullPath := idxTree.Find("name.example.com")
+	if ok {
+		if fullPath != "*.example.com." {
+			t.Error("expected *.example.com. but got ", fullPath)
+		}
+	} else {
+		t.Error("expected to find *.example.com. but got nothing")
+	}
+
+	ok, fullPath = idxTree.Find("another.name.example.com")
+	if ok {
+		if fullPath != "*.example.com." {
+			t.Error("expected *.example.com. but got ", fullPath)
+		}
+	} else {
+		t.Error("expected to find *.example.com. but got nothing")
+	}
+}
+
 func seedIndexFromFile(t *testing.T) Interface {
 	file, err := os.Open("domains.txt")
 	if err != nil {
